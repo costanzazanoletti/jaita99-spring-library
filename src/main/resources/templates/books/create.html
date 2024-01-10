@@ -69,6 +69,16 @@
         </ul>
       </div>
     </div>
+    <div class="col-4">
+      <label class="form-label" for="number-of-copies">Number of copies</label>
+      <input class="form-control" type="number" id="number-of-copies" th:field="*{numberOfCopies}"
+             th:errorClass="is-invalid">
+      <div class="invalid-feedback" th:if="${#fields.hasErrors('numberOfCopies')}">
+        <ul>
+          <li th:each="err : ${#fields.errors('numberOfCopies')}" th:text="${err}"></li>
+        </ul>
+      </div>
+    </div>
     <div class="col-12">
       <label for="synopsis" class="form-label">Synopsis</label>
       <textarea class="form-control" rows="10" id="synopsis" th:field="*{synopsis}"></textarea>

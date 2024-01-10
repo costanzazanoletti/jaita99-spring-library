@@ -1,3 +1,3 @@
 -- Gli statement non devono andare a capo
-INSERT INTO books (`year`, created_at, isbn, authors, publisher, title, synopsis) VALUES(2009, '2024-01-08', '9780132350884', 'Robert C. Martin', 'Pearson', 'Clean Code', 'Manual for developers');
-INSERT INTO books (`year`, created_at, isbn, authors, publisher, title, synopsis) VALUES(1973, '2024-01-08', '6580132450884', 'Frank Herbert', 'Einaudi', 'Dune', 'A fantasy saga');
+INSERT INTO books (`year`, created_at, isbn, authors, publisher, title, synopsis,number_of_copies) VALUES(2009, '2024-01-08', '9780132350884', 'Robert C. Martin', 'Pearson', 'Clean Code', 'Manual for developers',2);
+INSERT INTO books (`year`, created_at, isbn, authors, publisher, title, synopsis,number_of_copies) VALUES(1973, '2024-01-08', '6580132450884', 'Frank Herbert', 'Einaudi', 'Dune', 'A fantasy saga',3);

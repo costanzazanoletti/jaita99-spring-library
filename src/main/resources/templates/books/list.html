@@ -24,6 +24,7 @@
       <th>Authors</th>
       <th>Publisher</th>
       <th>ISBN</th>
+      <th>N.copies</th>
       <th></th>
     </tr>
     </thead>
@@ -33,6 +34,7 @@
       <td th:text="${book.authors}"></td>
       <td th:text="${book.publisher}"></td>
       <td th:text="${book.isbn}"></td>
+      <td th:text="${book.numberOfCopies}"></td>
       <td>
         <a class="btn btn-primary" th:href="@{/books/show/{id}(id=${book.id})}">Detail</a>
       </td>

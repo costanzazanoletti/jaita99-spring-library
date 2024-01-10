@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -58,14 +59,21 @@ public class BookController {
   // metodo create che mostra la pagina col form di creazione di un Book
   @GetMapping("/create")
   public String create(Model model) {
+    Book book = new Book();
+    //book.setTitle("Default title");
     // passo tramite Model un attributo di tipo Book vuoto
-    model.addAttribute("book", new Book());
+    model.addAttribute("book", book);
     return "books/create";
   }
 
   // metodo che riceve il submit del form di creazione e salva su db il Book
   // per attivare la validazione sul formBook lo annoto come @Valid e gli errori verranno
   // inseriti nella mappa BindingResult, che deve essere il parametro immmediatamente successivo
+
+  /*
+   * Book formBook = new Book();
+   * formBook.setTitle("Moby Dick")
+   * */
   @PostMapping("/create")
   public String store(@Valid @ModelAttribute("book") Book formBook, BindingResult bindingResult) {
     // valido i dati del Book, cioè verifico se la mappa BindingResult ha errori
@@ -74,12 +82,21 @@ public class BookController {
       // ricaricando il template del form
       return "books/create";
     }
+    // verifico se l'isbn del libro da salvare è già presente in database
 
-    // se sono validi lo salvo su db
-    formBook.setCreatedAt(LocalDateTime.now());
-    Book savedBook = bookRepository.save(formBook);
-    // faccio una redirect alla pagina di dettaglio del libro appena creato
-    return "redirect:/books/show/" + savedBook.getId();
+    Optional<Book> bookWithIsbn = bookRepository.findByIsbn(formBook.getIsbn());
+    if (bookWithIsbn.isPresent()) {
+      // se esiste già ritorno un errore
+      bindingResult.addError(new FieldError("book", "isbn", formBook.getIsbn(), false, null, null,
+          "ISBN must be unique"));
+      return "books/create";
+    } else {
+      // se sono validi lo salvo su db
+      formBook.setCreatedAt(LocalDateTime.now());
+      Book savedBook = bookRepository.save(formBook);
+      // faccio una redirect alla pagina di dettaglio del libro appena creato
+      return "redirect:/books/show/" + savedBook.getId();
+    }
   }
 
 }

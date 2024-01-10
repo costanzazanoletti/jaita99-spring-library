@@ -7,7 +7,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import java.time.LocalDateTime;
 
@@ -27,12 +29,16 @@ public class Book {
   private String publisher;
   @NotEmpty(message = "ISBN must not be blank")
   @Size(min = 10, max = 13, message = "ISBN size must be from 10 to 13 characters")
-  @Column(nullable = false, length = 13)
+  @Column(nullable = false, length = 13, unique = true)
   private String isbn;
   private Integer year;
   @Lob
   private String synopsis;
   private LocalDateTime createdAt;
+
+  @NotNull
+  @Min(1)
+  private int numberOfCopies;
 
   // COSTRUTTORI (se ne creo uno con parametri devo anche crearne uno vuoto)
 
@@ -100,5 +106,13 @@ public class Book {
 
   public void setCreatedAt(LocalDateTime createdAt) {
     this.createdAt = createdAt;
+  }
+
+  public int getNumberOfCopies() {
+    return numberOfCopies;
+  }
+
+  public void setNumberOfCopies(int numberOfCopies) {
+    this.numberOfCopies = numberOfCopies;
   }
 }
