@@ -1,5 +1,7 @@
 package org.learning.springlibrary.controller;
 
+import jakarta.validation.Valid;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import org.learning.springlibrary.model.Book;
@@ -8,8 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -50,5 +55,31 @@ public class BookController {
     }
   }
 
+  // metodo create che mostra la pagina col form di creazione di un Book
+  @GetMapping("/create")
+  public String create(Model model) {
+    // passo tramite Model un attributo di tipo Book vuoto
+    model.addAttribute("book", new Book());
+    return "books/create";
+  }
+
+  // metodo che riceve il submit del form di creazione e salva su db il Book
+  // per attivare la validazione sul formBook lo annoto come @Valid e gli errori verranno
+  // inseriti nella mappa BindingResult, che deve essere il parametro immmediatamente successivo
+  @PostMapping("/create")
+  public String store(@Valid @ModelAttribute("book") Book formBook, BindingResult bindingResult) {
+    // valido i dati del Book, cioè verifico se la mappa BindingResult ha errori
+    if (bindingResult.hasErrors()) {
+      // qui gestisco che ho campi non validi
+      // ricaricando il template del form
+      return "books/create";
+    }
+
+    // se sono validi lo salvo su db
+    formBook.setCreatedAt(LocalDateTime.now());
+    Book savedBook = bookRepository.save(formBook);
+    // faccio una redirect alla pagina di dettaglio del libro appena creato
+    return "redirect:/books/show/" + savedBook.getId();
+  }
 
 }

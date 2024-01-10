@@ -7,6 +7,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 import java.time.LocalDateTime;
 
 @Entity
@@ -17,10 +19,14 @@ public class Book {
   @Id // primary key
   @GeneratedValue(strategy = GenerationType.IDENTITY) // auto increment
   private Integer id;
+  @NotEmpty(message = "Title must not be blank")
   @Column(nullable = false)
   private String title;
+  @NotEmpty(message = "Authors must not be blank")
   private String authors;
   private String publisher;
+  @NotEmpty(message = "ISBN must not be blank")
+  @Size(min = 10, max = 13, message = "ISBN size must be from 10 to 13 characters")
   @Column(nullable = false, length = 13)
   private String isbn;
   private Integer year;
