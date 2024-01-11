@@ -37,6 +37,7 @@
       <td th:text="${book.numberOfCopies}"></td>
       <td>
         <a class="btn btn-primary" th:href="@{/books/show/{id}(id=${book.id})}">Detail</a>
+        <a class="btn btn-primary" th:href="@{/books/edit/{id}(id=${book.id})}">Edit</a>
       </td>
     </tr>
     </tbody>

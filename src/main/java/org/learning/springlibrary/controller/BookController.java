@@ -99,4 +99,44 @@ public class BookController {
     }
   }
 
+  // metodo che restituisce la pagina di modifica del Book
+  @GetMapping("/edit/{id}")
+  public String edit(@PathVariable Integer id, Model model) {
+    // recupero il libro da database
+    Optional<Book> result = bookRepository.findById(id);
+    // verifico se il Book è presente
+    if (result.isPresent()) {
+      // lo passo come attributo del Model
+      model.addAttribute("book", result.get());
+      // ritorno il template
+      return "books/edit";
+    } else {
+      throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Book with id " + id + " not found");
+    }
+  }
+
+  // metodo che riceve il submit del form di edit
+  @PostMapping("/edit/{id}")
+  public String update(@PathVariable Integer id, @Valid @ModelAttribute("book") Book formBook,
+      BindingResult bindingResult) {
+    Optional<Book> result = bookRepository.findById(id);
+    if (result.isPresent()) {
+      Book bookToEdit = result.get();
+      // valido i dati del libro
+      if (bindingResult.hasErrors()) {
+        // se ci sono errori di validazione
+        return "books/edit";
+      }
+
+      // se sono validi salvo il libro su db
+      // prima di salvare i dati su db recupero il valore del campo createdAt
+      formBook.setCreatedAt(bookToEdit.getCreatedAt());
+      Book savedBook = bookRepository.save(formBook);
+      // faccio la redirect alla pagina di dettaglio del libro
+      return "redirect:/books/show/" + id;
+    } else {
+      throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Book with id " + id + " not found");
+    }
+  }
+
 }
