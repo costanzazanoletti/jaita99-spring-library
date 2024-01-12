@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/books")
@@ -136,6 +137,24 @@ public class BookController {
       return "redirect:/books/show/" + id;
     } else {
       throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Book with id " + id + " not found");
+    }
+  }
+
+  // metodo che cancella un Book preso per id
+  @PostMapping("/delete/{id}")
+  public String delete(@PathVariable Integer id, RedirectAttributes redirectAttributes) {
+    // verifico se il Book è presente su db
+    Optional<Book> result = bookRepository.findById(id);
+    if (result.isPresent()) {
+      // se c'è lo cancello
+      bookRepository.deleteById(id);
+      // mando un messaggio di successo con la redirect
+      redirectAttributes.addFlashAttribute("redirectMessage",
+          "Book " + result.get().getTitle() + " deleted!");
+      return "redirect:/books";
+    } else {
+      // se non c'è sollevo un'eccezione
+      throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Book with di " + id + " not found");
     }
   }
 

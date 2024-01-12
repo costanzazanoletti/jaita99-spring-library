@@ -23,6 +23,7 @@
       th:action="@{/books/edit/{id}(id=${book.id})}"
       class="row gy-3"
   >
+    <input type="hidden" th:field="*{createdAt}">
     <div class="col-6">
       <label class="form-label" for="title">Title</label>
       <input class="form-control" type="text" id="title" th:field="*{title}"
