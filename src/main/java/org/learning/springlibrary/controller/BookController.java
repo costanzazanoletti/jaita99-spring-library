@@ -31,11 +31,20 @@ public class BookController {
 
   // metodo index che mostra la lista di tutti i libri
   @GetMapping
-  public String index(Model model) {
-    // recupero la lista di libri dal database
-    List<Book> bookList = bookRepository.findAll();
+  public String index(@RequestParam(name = "keyword", required = false) String searchKeyword,
+      Model model) {
+    List<Book> bookList;
+    // se searchKeyword è presente faccio la ricerca per titolo
+    if (searchKeyword != null) {
+      bookList = bookRepository.findByTitleContaining(searchKeyword);
+    } else {
+      // altrimenti recupero la lista di tutti i libri dal database
+      bookList = bookRepository.findAll();
+    }
     // aggiungo la lista di libri agli attributi del Model
     model.addAttribute("bookList", bookList);
+    // precarico il value dell'input di ricerca con la stringa searchKeyword
+    model.addAttribute("preloadSearch", searchKeyword);
     return "books/list";
   }
 
@@ -159,12 +168,12 @@ public class BookController {
     }
   }
 
-  @GetMapping("/search")
+/*  @GetMapping("/search")
   // localhost:8080/books/search?keyword=dune, query string parameter -> @RequestParam
   public String search(@RequestParam(name = "keyword") String searchKeyword, Model model) {
     // faccio una select di Book solo il cui titolo contiene searchKeyword
     List<Book> bookList = bookRepository.findByTitleContaining(searchKeyword);
     model.addAttribute("bookList", bookList);
     return "books/list";
-  }
+  }*/
 }
