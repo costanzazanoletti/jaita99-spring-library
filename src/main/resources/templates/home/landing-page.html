@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/resources :: head('Home')"></head>
+<body>
+<nav th:replace="fragments/navbar :: topNavbar('home')"></nav>
+<div class="container">
+  <h1>Welcome to the Spring Library</h1>
+  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam cum doloribus, ducimus enim
+     eum eveniet facilis, placeat quos recusandae repellendus temporibus vel voluptatum? Ex
+     obcaecati quasi quisquam saepe sit suscipit.</p>
+</div>
+<th:block th:replace="fragments/resources :: script"></th:block>
+</body>
+</html>
