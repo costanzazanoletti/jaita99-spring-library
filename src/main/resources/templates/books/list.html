@@ -24,17 +24,20 @@
   
   <h1>Book List</h1>
   <hr>
-  <!-- box di ricerca -->
+  <!--
+  box di ricerca: precarico il value dell'input leggendo dai parametri della request quello che si chiama
+  come il name dell'input th:value="${param.keyword}" oppure con un attributo custom del Model th:value="${preloadSearch}"
+  -->
   <div class="row mb-4">
     <form
         id="book-search"
-        th:action="@{/books/search}"
+        th:action="@{/books}"
         method="get"
         class="col-4"
     >
       <div class="input-group">
         <input class="form-control" type="text" name="keyword" id="keyword"
-               placeholder="Search books by title">
+               placeholder="Search books by title" th:value="${preloadSearch}">
         <button type="submit" class="btn btn-primary">Search</button>
       </div>
     </form>
