@@ -14,4 +14,7 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
 
   // metodo che cerca tutti i libri il cui titolo contiene una stringa di ricerca
   List<Book> findByTitleContaining(String search);
+
+  // metodo che cerca tutti i libri il cui titolo o i cui autori contentogno una stringa di ricerca
+  List<Book> findByTitleContainingOrAuthorsContaining(String searchTitle, String searchAuthors);
 }

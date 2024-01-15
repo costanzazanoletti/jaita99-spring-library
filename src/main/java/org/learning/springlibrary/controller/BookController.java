@@ -36,7 +36,8 @@ public class BookController {
     List<Book> bookList;
     // se searchKeyword è presente faccio la ricerca per titolo
     if (searchKeyword != null) {
-      bookList = bookRepository.findByTitleContaining(searchKeyword);
+      bookList = bookRepository.findByTitleContainingOrAuthorsContaining(searchKeyword,
+          searchKeyword);
     } else {
       // altrimenti recupero la lista di tutti i libri dal database
       bookList = bookRepository.findAll();
