@@ -24,6 +24,22 @@
   
   <h1>Book List</h1>
   <hr>
+  <!-- box di ricerca -->
+  <div class="row mb-4">
+    <form
+        id="book-search"
+        th:action="@{/books/search}"
+        method="get"
+        class="col-4"
+    >
+      <div class="input-group">
+        <input class="form-control" type="text" name="keyword" id="keyword"
+               placeholder="Search books by title">
+        <button type="submit" class="btn btn-primary">Search</button>
+      </div>
+    </form>
+  </div>
+  <!-- lista -->
   <div class="alert alert-info" th:if="${bookList.size() == 0}">The list is empty</div>
   <table class="table" th:unless="${bookList.size() == 0}">
     <thead>

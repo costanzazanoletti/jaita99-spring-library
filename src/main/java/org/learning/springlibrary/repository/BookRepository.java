@@ -1,5 +1,6 @@
 package org.learning.springlibrary.repository;
 
+import java.util.List;
 import java.util.Optional;
 import org.learning.springlibrary.model.Book;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -10,4 +11,7 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
 
   // aggiungo un metodo che ricerca i Book per ISBN
   Optional<Book> findByIsbn(String isbn);
+
+  // metodo che cerca tutti i libri il cui titolo contiene una stringa di ricerca
+  List<Book> findByTitleContaining(String search);
 }

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -158,4 +159,12 @@ public class BookController {
     }
   }
 
+  @GetMapping("/search")
+  // localhost:8080/books/search?keyword=dune, query string parameter -> @RequestParam
+  public String search(@RequestParam(name = "keyword") String searchKeyword, Model model) {
+    // faccio una select di Book solo il cui titolo contiene searchKeyword
+    List<Book> bookList = bookRepository.findByTitleContaining(searchKeyword);
+    model.addAttribute("bookList", bookList);
+    return "books/list";
+  }
 }
