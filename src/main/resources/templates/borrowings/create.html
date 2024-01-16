@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/resources :: head('Create Borrowing')"></head>
+<body>
+<!-- Attributi: book(Book), borrowing(Borrowing) -->
+<nav th:replace="fragments/navbar :: topNavbar('books')"></nav>
+<main class="container">
+  <h1>Create Borrowing for <span th:text="${book.title}"></span></h1>
+  <hr>
+  <!-- form di creazione di un Borrowing -->
+  <form
+      id="create-borrowing"
+      method="post"
+      th:action="@{/borrowings/create}"
+      th:object="${borrowing}"
+      class="row gy-3"
+  >
+    <input type="hidden" th:field="*{book}">
+    <div class="col-6">
+      <label class="form-label" for="startDate">Start Date</label>
+      <input class="form-control" type="date" id="startDate" th:field="*{startDate}"
+             th:errorClass="is-invalid">
+      <div class="invalid-feedback" th:if="${#fields.hasErrors('startDate')}">
+        <ul>
+          <li th:each="err : ${#fields.errors('startDate')}" th:text="${err}"></li>
+        </ul>
+      </div>
+    </div>
+    <div class="col-6">
+      <label class="form-label" for="expireDate">Expire Date</label>
+      <input class="form-control" type="date" id="expireDate" th:field="*{expireDate}"
+             th:errorClass="is-invalid">
+      <div class="invalid-feedback" th:if="${#fields.hasErrors('expireDate')}">
+        <ul>
+          <li th:each="err : ${#fields.errors('expireDate')}" th:text="${err}"></li>
+        </ul>
+      </div>
+    </div>
+    <div class="col-12">
+      <label class="form-label" for="note">Note</label>
+      <textarea class="form-control" id="note" th:field="*{note}"
+                th:errorClass="is-invalid"></textarea>
+      <div class="invalid-feedback" th:if="${#fields.hasErrors('note')}">
+        <ul>
+          <li th:each="err : ${#fields.errors('note')}" th:text="${err}"></li>
+        </ul>
+      </div>
+    </div>
+    <div class="col-12">
+      <button type="submit" class="btn btn-primary">Save</button>
+      <a class="btn btn-primary" th:href="@{/books/show/{id}(id=${book.id})}">Cancel</a>
+    </div>
+  </form>
+</main>
+
+<th:block th:replace="fragments/resources :: script"></th:block>
+</body>
+</html>
