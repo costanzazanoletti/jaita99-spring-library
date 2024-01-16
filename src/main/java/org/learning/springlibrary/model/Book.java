@@ -6,12 +6,14 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "books")
@@ -39,6 +41,11 @@ public class Book {
   @NotNull
   @Min(1)
   private int numberOfCopies;
+
+  // attributo che rappresenta i prestiti
+  @OneToMany(mappedBy = "book")
+  // no nuova relazione, l'avevo già definita sull'attributo book di Borrowing
+  private List<Borrowing> borrowings;
 
   // COSTRUTTORI (se ne creo uno con parametri devo anche crearne uno vuoto)
 
@@ -114,5 +121,13 @@ public class Book {
 
   public void setNumberOfCopies(int numberOfCopies) {
     this.numberOfCopies = numberOfCopies;
+  }
+
+  public List<Borrowing> getBorrowings() {
+    return borrowings;
+  }
+
+  public void setBorrowings(List<Borrowing> borrowings) {
+    this.borrowings = borrowings;
   }
 }
