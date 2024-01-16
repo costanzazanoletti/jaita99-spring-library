@@ -42,6 +42,7 @@ public class Book {
   @Min(1)
   private int numberOfCopies;
 
+
   // attributo che rappresenta i prestiti
   @OneToMany(mappedBy = "book")
   // no nuova relazione, l'avevo già definita sull'attributo book di Borrowing
@@ -50,6 +51,19 @@ public class Book {
   // COSTRUTTORI (se ne creo uno con parametri devo anche crearne uno vuoto)
 
   // METODI (devo assolutamente mettere tutti i getter e setter)
+
+  // metodo per calcolare il numero di copie in prestito
+  public int getAvailableCopies() {
+    // sottraggo al numero di copie totale il numero di copie in prestito
+
+    int borrowedCopies = 0;
+    for (Borrowing borrowing : borrowings) {
+      if (borrowing.getReturnDate() == null) {
+        borrowedCopies++;
+      }
+    }
+    return numberOfCopies - borrowedCopies;
+  }
 
   public Integer getId() {
     return id;
