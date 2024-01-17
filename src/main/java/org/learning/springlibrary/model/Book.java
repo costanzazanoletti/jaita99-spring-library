@@ -44,7 +44,7 @@ public class Book {
 
 
   // attributo che rappresenta i prestiti
-  @OneToMany(mappedBy = "book")
+  @OneToMany(mappedBy = "book", orphanRemoval = true)
   // no nuova relazione, l'avevo già definita sull'attributo book di Borrowing
   private List<Borrowing> borrowings;
 
