@@ -81,4 +81,10 @@ public class Borrowing {
   public void setBook(Book book) {
     this.book = book;
   }
+
+  // METODI CUSTOM
+  public boolean isExpired() {
+    // confronto la data odierna con la expireDate
+    return expireDate.isBefore(LocalDate.now()) && returnDate == null;
+  }
 }

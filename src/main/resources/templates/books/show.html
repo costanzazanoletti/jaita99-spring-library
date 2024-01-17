@@ -41,7 +41,8 @@
       </tr>
       </thead>
       <tbody>
-      <tr th:each="brw : ${book.borrowings}">
+      <tr th:each="brw : ${book.borrowings}"
+          th:classAppend="${brw.isExpired() ? 'table-danger' : ''}">
         <td th:text="${brw.startDate}"></td>
         <td th:text="${brw.expireDate}"></td>
         <td th:text="${brw.returnDate}"></td>
