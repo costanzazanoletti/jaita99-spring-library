@@ -6,6 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
@@ -47,6 +48,10 @@ public class Book {
   @OneToMany(mappedBy = "book", orphanRemoval = true)
   // no nuova relazione, l'avevo già definita sull'attributo book di Borrowing
   private List<Borrowing> borrowings;
+
+
+  @ManyToOne
+  private BookType type;
 
   // COSTRUTTORI (se ne creo uno con parametri devo anche crearne uno vuoto)
 
@@ -143,5 +148,13 @@ public class Book {
 
   public void setBorrowings(List<Borrowing> borrowings) {
     this.borrowings = borrowings;
+  }
+
+  public BookType getType() {
+    return type;
+  }
+
+  public void setType(BookType type) {
+    this.type = type;
   }
 }

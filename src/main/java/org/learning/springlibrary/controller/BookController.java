@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 import org.learning.springlibrary.model.Book;
 import org.learning.springlibrary.repository.BookRepository;
+import org.learning.springlibrary.repository.BookTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -28,6 +29,9 @@ public class BookController {
   // il Controller ha bisogno delle funzionalità del Repository
   @Autowired
   private BookRepository bookRepository;
+
+  @Autowired
+  private BookTypeRepository bookTypeRepository;
 
   // metodo index che mostra la lista di tutti i libri
   @GetMapping
@@ -75,6 +79,8 @@ public class BookController {
     //book.setTitle("Default title");
     // passo tramite Model un attributo di tipo Book vuoto
     model.addAttribute("book", book);
+    // passo tramite Model la lista di tutti i BookType disponibili
+    model.addAttribute("bookTypeList", bookTypeRepository.findAll());
     return "books/create";
   }
 

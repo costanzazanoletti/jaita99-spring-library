@@ -3,7 +3,7 @@
 <head th:replace="fragments/resources :: head('Create Book')"></head>
 <body>
 <nav th:replace="fragments/navbar :: topNavbar('books')"></nav>
-<!-- Attributi: book(Book) -->
+<!-- Attributi: book(Book), bookTypeList(List<BookType>) -->
 <div class="container">
   <h1>Create Book</h1>
   <hr>
@@ -69,6 +69,14 @@
           <li th:each="err : ${#fields.errors('numberOfCopies')}" th:text="${err}"></li>
         </ul>
       </div>
+    </div>
+    <!-- tendina per BookType-->
+    <div class="col-4">
+      <label class="form-label" for="type"></label>
+      <select id="type" class="form-select" th:field="*{type}">
+        <option value="" selected>Choose a type</option>
+        <option th:each="bt : ${bookTypeList}" th:value="${bt.id}" th:text="${bt.name}"></option>
+      </select>
     </div>
     <div class="col-12">
       <label for="synopsis" class="form-label">Synopsis</label>
