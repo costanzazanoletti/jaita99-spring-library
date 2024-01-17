@@ -52,7 +52,7 @@ public class Book {
 
   // METODI (devo assolutamente mettere tutti i getter e setter)
 
-  // metodo per calcolare il numero di copie in prestito
+  // metodo per calcolare il numero di copie in prestito (ATTRIBUTO DERIVATO O CALCOLATO)
   public int getAvailableCopies() {
     // sottraggo al numero di copie totale il numero di copie in prestito
 

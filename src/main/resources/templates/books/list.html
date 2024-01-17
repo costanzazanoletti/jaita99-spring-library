@@ -46,16 +46,19 @@
       <th>Publisher</th>
       <th>ISBN</th>
       <th>N.copies</th>
+      <th>N.available</th>
       <th></th>
     </tr>
     </thead>
     <tbody>
-    <tr th:each="book : ${bookList}">
+    <tr th:each="book : ${bookList}"
+        th:classappend="${book.availableCopies == 0 ? 'table-warning' : ''}">
       <td th:text="${book.title}"></td>
       <td th:text="${book.authors}"></td>
       <td th:text="${book.publisher}"></td>
       <td th:text="${book.isbn}"></td>
       <td th:text="${book.numberOfCopies}"></td>
+      <td th:text="${book.availableCopies}"></td>
       <td class="d-flex justify-content-between">
         <a class="btn btn-primary" th:href="@{/books/show/{id}(id=${book.id})}"><i
             class="fa-solid fa-book"></i></a>

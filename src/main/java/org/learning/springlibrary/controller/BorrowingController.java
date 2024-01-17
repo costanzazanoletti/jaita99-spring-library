@@ -1,5 +1,6 @@
 package org.learning.springlibrary.controller;
 
+import jakarta.validation.Valid;
 import java.time.LocalDate;
 import java.util.Optional;
 import org.learning.springlibrary.model.Book;
@@ -10,7 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -55,11 +58,18 @@ public class BorrowingController {
   }
 
   @PostMapping("/create")
-  public String store(Borrowing formBorrowing) {
+  public String store(@Valid @ModelAttribute("borrowing") Borrowing formBorrowing,
+      BindingResult bindingResult, Model model) {
     // valido l'oggetto
-
-    // se ci sono errori ritorno il template del form
-
+    if (bindingResult.hasErrors()) {
+      // se ci sono errori ritorno il template del form
+      model.addAttribute("book", formBorrowing.getBook());
+      return "borrowings/create";
+    }
+    if (formBorrowing.getExpireDate() != null && formBorrowing.getExpireDate()
+        .isBefore(formBorrowing.getStartDate())) {
+      formBorrowing.setExpireDate(formBorrowing.getStartDate().plusDays(30));
+    }
     // se non ci sono errori lo salvo su database
     Borrowing storedBorrowing = borrowingRepository.save(formBorrowing);
     // faccio una redirect alla pagina di dettaglio del libro
