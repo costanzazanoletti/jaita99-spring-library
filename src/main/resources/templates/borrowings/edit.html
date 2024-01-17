@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/resources :: head('Create Book')"></head>
+<body>
+<nav th:replace="fragments/navbar :: topNavbar('books')"></nav>
+<!-- Attributi borrowing(Borrowing) -->
+<main class="container">
+  <h1>Edit Borrowing for <span th:text="${borrowing.book.title}"></span></h1>
+  <hr>
+  <!-- form di modifica di un Borrowing -->
+  <form
+      id="edit-borrowing"
+      method="post"
+      th:action="@{/borrowings/edit/{id}(id=${borrowing.id})}"
+      th:object="${borrowing}"
+      class="row gy-3"
+  >
+    <!-- campo nascosto per l'attributo book -->
+    <input type="hidden" th:field="*{book}">
+    <!-- campo startDate -->
+    <div class="col-6">
+      <label class="form-label" for="startDate">Start Date</label>
+      <input class="form-control" type="date" id="startDate" th:field="*{startDate}"
+             th:errorClass="is-invalid">
+      <div class="invalid-feedback" th:if="${#fields.hasErrors('startDate')}">
+        <ul>
+          <li th:each="err : ${#fields.errors('startDate')}" th:text="${err}"></li>
+        </ul>
+      </div>
+    </div>
+    <!-- campo expireDate -->
+    <div class="col-6">
+      <label class="form-label" for="expireDate">Expire Date</label>
+      <input class="form-control" type="date" id="expireDate" th:field="*{expireDate}"
+             th:errorClass="is-invalid">
+      <div class="invalid-feedback" th:if="${#fields.hasErrors('expireDate')}">
+        <ul>
+          <li th:each="err : ${#fields.errors('expireDate')}" th:text="${err}"></li>
+        </ul>
+      </div>
+    </div>
+    <!-- campo expireDate -->
+    <div class="col-6">
+      <label class="form-label" for="returnDate">Return Date</label>
+      <input class="form-control" type="date" id="returnDate" th:field="*{returnDate}"
+             th:errorClass="is-invalid">
+      <div class="invalid-feedback" th:if="${#fields.hasErrors('returnDate')}">
+        <ul>
+          <li th:each="err : ${#fields.errors('returnDate')}" th:text="${err}"></li>
+        </ul>
+      </div>
+    </div>
+    <!-- campo note -->
+    <div class="col-12">
+      <label class="form-label" for="note">Note</label>
+      <textarea class="form-control" id="note" th:field="*{note}"
+                th:errorClass="is-invalid"></textarea>
+      <div class="invalid-feedback" th:if="${#fields.hasErrors('note')}">
+        <ul>
+          <li th:each="err : ${#fields.errors('note')}" th:text="${err}"></li>
+        </ul>
+      </div>
+    </div>
+    <div class="col-12">
+      <button type="submit" class="btn btn-primary">Save</button>
+      <a class="btn btn-primary" th:href="@{/books/show/{id}(id=${borrowing.book.id})}">Cancel</a>
+    </div>
+  </form>
+</main>
+</body>
+</html>
