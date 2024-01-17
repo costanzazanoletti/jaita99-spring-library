@@ -111,4 +111,21 @@ public class BorrowingController {
     return "redirect:/books/show/" + updatedBorrowing.getBook().getId();
   }
 
+  // metodo per cancellare il borrowing preso per id
+  @PostMapping("/delete/{id}") // /borrowings/delete/1
+  public String delete(@PathVariable Integer id) {
+    // verifico se il Borrowing con l'id passato esiste
+    Optional<Borrowing> result = borrowingRepository.findById(id);
+    // se esiste lo elimino da db
+    if (result.isPresent()) {
+      Borrowing borrowingToDelete = result.get();
+      borrowingRepository.delete(borrowingToDelete);
+      return "redirect:/books/show/" + borrowingToDelete.getBook().getId();
+    } else {
+      // se non esiste sollevo un'eccezione HTTP 404
+      throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+          "Borrowing with id " + id + " not found");
+    }
+
+  }
 }
