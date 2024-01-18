@@ -6,6 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -52,6 +53,10 @@ public class Book {
 
   @ManyToOne
   private BookType type;
+
+
+  @ManyToMany
+  private List<Category> categories;
 
   // COSTRUTTORI (se ne creo uno con parametri devo anche crearne uno vuoto)
 
@@ -152,6 +157,14 @@ public class Book {
 
   public BookType getType() {
     return type;
+  }
+
+  public List<Category> getCategories() {
+    return categories;
+  }
+
+  public void setCategories(List<Category> categories) {
+    this.categories = categories;
   }
 
   public void setType(BookType type) {
