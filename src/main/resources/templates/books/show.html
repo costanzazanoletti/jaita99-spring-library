@@ -6,21 +6,31 @@
 <!-- Attributi: book(Book) -->
 <main class="container">
   <!-- section dettagli Book --->
-  <section>
+  <section class="row">
     <h1 th:text="${book.title}"></h1>
     <h2 th:text="${book.authors}"></h2>
     <hr>
-    <p>Publisher: <span th:text="${book.publisher}"></span></p>
-    <p>Year: <span th:text="${book.year}"></span></p>
-    <p>ISBN: <span th:text="${book.isbn}"></span></p>
-    <p>Type:
-      <span th:if="${book.type != null}" th:text="${book.type.name}"></span>
-      <span th:unless="${book.type != null}">N.D.</span>
-    </p>
-    <p>Number of copies: <span th:text="${book.numberOfCopies}"></span></p>
-    <p>Number of available copies: <span th:text="${book.availableCopies}"></span></p>
-    <h4>Synopsis</h4>
-    <p th:text="${book.synopsis}"></p>
+    <!-- dettagli -->
+    <div class="col-6">
+      <p>Publisher: <span th:text="${book.publisher}"></span></p>
+      <p>Year: <span th:text="${book.year}"></span></p>
+      <p>ISBN: <span th:text="${book.isbn}"></span></p>
+      <p>Type:
+        <span th:if="${book.type != null}" th:text="${book.type.name}"></span>
+        <span th:unless="${book.type != null}">N.D.</span>
+      </p>
+      <p>Number of copies: <span th:text="${book.numberOfCopies}"></span></p>
+      <p>Number of available copies: <span th:text="${book.availableCopies}"></span></p>
+      <h4>Synopsis</h4>
+      <p th:text="${book.synopsis}"></p>
+    </div>
+    <!-- categorie -->
+    <div class="col-6">
+      <h4>Categories</h4>
+      <ul>
+        <li th:each="cat : ${book.categories}" th:text="${cat.name}"></li>
+      </ul>
+    </div>
     <div class="mt-3">
       <a th:href="@{/books}" class="btn btn-primary">
         <i class="fa-solid fa-arrow-left"></i>Back to list

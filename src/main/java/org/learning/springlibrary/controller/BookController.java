@@ -137,6 +137,10 @@ public class BookController {
     if (result.isPresent()) {
       // lo passo come attributo del Model
       model.addAttribute("book", result.get());
+      // passo la lista di tutti i BookType
+      model.addAttribute("bookTypeList", bookTypeRepository.findAll());
+      // passo la lista di tutte le Category
+      model.addAttribute("categoryList", categoryRepository.findAll());
       // ritorno il template
       return "books/edit";
     } else {
