@@ -164,6 +164,8 @@ public class BookController {
       // se sono validi salvo il libro su db
       // prima di salvare i dati su db recupero il valore del campo createdAt
       formBook.setCreatedAt(bookToEdit.getCreatedAt());
+      // recupero anche i borrowing
+      formBook.setBorrowings(bookToEdit.getBorrowings());
       Book savedBook = bookRepository.save(formBook);
       // faccio la redirect alla pagina di dettaglio del libro
       return "redirect:/books/show/" + id;
