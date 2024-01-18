@@ -11,3 +11,9 @@ INSERT INTO book_type (name) VALUES('flexible cover');
 INSERT INTO book_type (name) VALUES('audiobook');
 INSERT INTO book_type (name) VALUES('e-book');
 INSERT INTO book_type (name) VALUES('ancient book');
+-- insert categories
+INSERT INTO categories (description, name) VALUES('age 11 to 19', 'teenagers');
+INSERT INTO categories (description, name) VALUES('age 0 to 10', 'children');
+INSERT INTO categories (description, name) VALUES('age over 19', 'adult');
+INSERT INTO categories (description, name) VALUES('novels', 'fiction');
+INSERT INTO categories (description, name) VALUES('reality based books', 'not-fiction');

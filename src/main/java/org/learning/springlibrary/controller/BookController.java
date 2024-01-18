@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.learning.springlibrary.model.Book;
 import org.learning.springlibrary.repository.BookRepository;
 import org.learning.springlibrary.repository.BookTypeRepository;
+import org.learning.springlibrary.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -32,6 +33,9 @@ public class BookController {
 
   @Autowired
   private BookTypeRepository bookTypeRepository;
+
+  @Autowired
+  private CategoryRepository categoryRepository;
 
   // metodo index che mostra la lista di tutti i libri
   @GetMapping
@@ -81,6 +85,8 @@ public class BookController {
     model.addAttribute("book", book);
     // passo tramite Model la lista di tutti i BookType disponibili
     model.addAttribute("bookTypeList", bookTypeRepository.findAll());
+    // passo tramite Model la lista di tutte le Category disponibili
+    model.addAttribute("categoryList", categoryRepository.findAll());
     return "books/create";
   }
 
@@ -93,11 +99,16 @@ public class BookController {
    * formBook.setTitle("Moby Dick")
    * */
   @PostMapping("/create")
-  public String store(@Valid @ModelAttribute("book") Book formBook, BindingResult bindingResult) {
+  public String store(@Valid @ModelAttribute("book") Book formBook, BindingResult bindingResult,
+      Model model) {
     // valido i dati del Book, cioè verifico se la mappa BindingResult ha errori
     if (bindingResult.hasErrors()) {
       // qui gestisco che ho campi non validi
       // ricaricando il template del form
+      // passo tramite Model la lista di tutti i BookType disponibili
+      model.addAttribute("bookTypeList", bookTypeRepository.findAll());
+      // passo tramite Model la lista di tutte le Category disponibili
+      model.addAttribute("categoryList", categoryRepository.findAll());
       return "books/create";
     }
     // verifico se l'isbn del libro da salvare è già presente in database

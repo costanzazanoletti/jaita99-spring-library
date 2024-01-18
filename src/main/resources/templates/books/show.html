@@ -13,7 +13,10 @@
     <p>Publisher: <span th:text="${book.publisher}"></span></p>
     <p>Year: <span th:text="${book.year}"></span></p>
     <p>ISBN: <span th:text="${book.isbn}"></span></p>
-    <p>Type: <span th:text="${book.type.name}"></span></p>
+    <p>Type:
+      <span th:if="${book.type != null}" th:text="${book.type.name}"></span>
+      <span th:unless="${book.type != null}">N.D.</span>
+    </p>
     <p>Number of copies: <span th:text="${book.numberOfCopies}"></span></p>
     <p>Number of available copies: <span th:text="${book.availableCopies}"></span></p>
     <h4>Synopsis</h4>
