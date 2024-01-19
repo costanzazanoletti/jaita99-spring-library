@@ -17,3 +17,11 @@ INSERT INTO categories (description, name) VALUES('age 0 to 10', 'children');
 INSERT INTO categories (description, name) VALUES('age over 19', 'adult');
 INSERT INTO categories (description, name) VALUES('novels', 'fiction');
 INSERT INTO categories (description, name) VALUES('reality based books', 'not-fiction');
+-- insert users
+INSERT INTO `role` (name) VALUES('ADMIN');
+INSERT INTO `role` (name) VALUES('USER');
+INSERT INTO library_user (email, first_name, last_name, password) VALUES('jane@email.com', 'Jane', 'Doe', '{noop}jane');
+INSERT INTO library_user (email, first_name, last_name, password) VALUES('john@email.com', 'John', 'Doe', '{noop}john');
+INSERT INTO library_user_role_set (library_user_id, role_set_name) VALUES(1, 'ADMIN');
+INSERT INTO library_user_role_set (library_user_id, role_set_name) VALUES(1, 'USER');
+INSERT INTO library_user_role_set (library_user_id, role_set_name) VALUES(2, 'USER');
