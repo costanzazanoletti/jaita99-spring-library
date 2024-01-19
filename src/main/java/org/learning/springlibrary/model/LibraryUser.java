@@ -61,4 +61,12 @@ public class LibraryUser {
   public void setPassword(String password) {
     this.password = password;
   }
+
+  public Set<Role> getRoleSet() {
+    return roleSet;
+  }
+
+  public void setRoleSet(Set<Role> roleSet) {
+    this.roleSet = roleSet;
+  }
 }
