@@ -1,5 +1,6 @@
 package org.learning.springlibrary.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -46,6 +47,7 @@ public class Book {
 
 
   // attributo che rappresenta i prestiti
+  @JsonIgnore
   @OneToMany(mappedBy = "book", orphanRemoval = true)
   // no nuova relazione, l'avevo già definita sull'attributo book di Borrowing
   private List<Borrowing> borrowings;

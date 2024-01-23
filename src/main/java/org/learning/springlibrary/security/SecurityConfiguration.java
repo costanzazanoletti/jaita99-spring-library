@@ -53,11 +53,15 @@ public class SecurityConfiguration {
         .requestMatchers("/books", "/books/show/**").hasAnyAuthority("ADMIN", "USER")
         .requestMatchers("/categories", "/categories/**").hasAuthority("ADMIN")
         .requestMatchers("/borrowings/**").hasAuthority("ADMIN")
-        .requestMatchers(HttpMethod.POST).hasAuthority("ADMIN")
+        .requestMatchers(HttpMethod.POST, "/books/**").hasAuthority("ADMIN")
+        .requestMatchers(HttpMethod.POST, "/categories/**").hasAuthority("ADMIN")
+        .requestMatchers(HttpMethod.POST, "/borrowings/**").hasAuthority("ADMIN")
         .requestMatchers("/", "/**").permitAll()
+        .requestMatchers("/api/v1/**").permitAll()
         .and().formLogin()
         .and().logout()
-        .and().exceptionHandling();
+        .and().exceptionHandling()
+        .and().csrf().disable();
 
     return http.build();
   }

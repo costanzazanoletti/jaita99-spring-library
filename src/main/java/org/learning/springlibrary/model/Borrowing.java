@@ -29,6 +29,7 @@ public class Borrowing {
   @Lob
   private String note;
 
+  //@JsonIgnore
   @ManyToOne
   private Book book;
 
