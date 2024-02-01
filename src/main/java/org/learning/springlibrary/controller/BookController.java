@@ -192,12 +192,4 @@ public class BookController {
     }
   }
 
-/*  @GetMapping("/search")
-  // localhost:8080/books/search?keyword=dune, query string parameter -> @RequestParam
-  public String search(@RequestParam(name = "keyword") String searchKeyword, Model model) {
-    // faccio una select di Book solo il cui titolo contiene searchKeyword
-    List<Book> bookList = bookRepository.findByTitleContaining(searchKeyword);
-    model.addAttribute("bookList", bookList);
-    return "books/list";
-  }*/
 }
